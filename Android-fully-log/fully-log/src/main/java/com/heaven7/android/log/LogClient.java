@@ -13,7 +13,7 @@ import java.util.ArrayList;
 /**
  * Created by heaven7 on 2016/7/3.
  */
-public class LogClient extends LogContext{
+public class LogClient extends RemoteLogContext {
 
     private static final String TAG = "LogClient";
 

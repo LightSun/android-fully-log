@@ -59,7 +59,7 @@ public class ScrollingActivity extends AppCompatActivity {
     }
 
     private void testRead() {
-        mLogClient.readLog(new LogFilterOptions(), new LogContext.IReadCallback() {
+        mLogClient.readLog(new LogFilterOptions(), new RemoteLogContext.IReadCallback() {
             @Override
             public void onResult(List<LogRecord> records) {
                 com.heaven7.core.util.Logger.i(TAG, "testRead", "LogRecord: size = " + records.size() +" , " + records);

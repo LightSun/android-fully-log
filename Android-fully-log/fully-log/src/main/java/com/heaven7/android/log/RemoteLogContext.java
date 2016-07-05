@@ -12,7 +12,7 @@ import java.util.List;
 /**
  * Created by heaven7 on 2016/7/5.
  */
-public abstract class LogContext {
+public abstract class RemoteLogContext {
 
     private static final String TAG            = "LogManager";
     private static final boolean DEBUG         = true;
@@ -134,7 +134,7 @@ public abstract class LogContext {
      * @param dir  the dir for read or write log file
      * @param mMode the mode
      */
-    public LogContext(String dir, @ModeType int mMode) {
+    public RemoteLogContext(String dir, @ModeType int mMode) {
         this.mDir = dir;
         this.mMode = mMode;
         File dirFile = new File(dir);

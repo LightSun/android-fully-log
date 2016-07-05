@@ -18,7 +18,7 @@ import java.util.List;
 /**
  * Created by heaven7 on 2016/7/5.
  */
-public class LogServer extends LogContext{
+public class LogServer extends RemoteLogContext {
 
     private static final String TAG = "LogServer";
     private final MessageServer mMessageServer;
