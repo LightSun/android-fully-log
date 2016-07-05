@@ -20,6 +20,10 @@ public class LogClient extends LogContext{
     private final MessageClient mClient;
     private volatile IReadCallback mReadCallback;
 
+    public LogClient(Context context){
+        this(context, DEFAULT_DIR, MODE_WRITE_FILE_AND_LOGCAT);
+    }
+
     public LogClient(Context context, String dir , @ModeType int mMode){
         super(dir, mMode);
         mClient = new MessageClient(context){
@@ -161,9 +165,17 @@ public class LogClient extends LogContext{
     private void doWithReplyMessage(Message msg) {
          switch (msg.what){
              case LogConstant.WHAT_READ_LOG:
+                 //in ipc : while pass the parcelable class you need care classloader.
+                 msg.getData().setClassLoader(LogRecord.class.getClassLoader());
+                 if (  (msg.getData().getInt(LogConstant.KEY_LOG_OP_RESULT, LogConstant.OP_STATE_FAILED)
+                            ) != LogConstant.OP_STATE_SUCCESS) {
+                     logWhenDebug("doWithReplyMessage", "notice : " + msg.getData().getString(LogConstant.KEY_LOG_NOTICE));
+                     return;
+                 }
                  if(mReadCallback != null){ //if null means it is cancelled.
                      final ArrayList<LogRecord> records = msg.getData().getParcelableArrayList(LogConstant.KEY_LOG_LOGRECORDS);
                      mReadCallback.onResult(records);
+                     mReadCallback = null;
                  }
                  break;
 

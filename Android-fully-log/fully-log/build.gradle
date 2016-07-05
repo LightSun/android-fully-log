@@ -23,6 +23,5 @@ dependencies {
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:23.3.0'
 
-    compile 'com.heaven7.android.ipc:ipc:1.0.1'
-    compile 'com.heaven7.core.util:memory:1.0'
+    compile 'com.heaven7.android.ipc:ipc:1.0.2'
 }

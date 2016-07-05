@@ -1,6 +1,8 @@
 package com.heaven7.android.log;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
@@ -71,4 +73,22 @@ public class LogUtil {
         return data;
     }
 
+    public static void write2SD(String filename, String message, boolean append ) {
+        BufferedWriter bw = null;
+        try {
+            bw = new BufferedWriter(new FileWriter(LogUtil.createFileIfNeed(filename), append )); // append
+            bw.append(message);
+            bw.newLine();
+            bw.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (bw != null)
+                try {
+                    bw.close();
+                } catch (IOException e) {
+                    //ignore
+                }
+        }
+    }
 }

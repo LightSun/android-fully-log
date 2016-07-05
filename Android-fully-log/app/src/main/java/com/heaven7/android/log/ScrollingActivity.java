@@ -10,8 +10,15 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.heaven7.android.log.demo.R;
+import com.heaven7.core.util.MainWorker;
+
+import java.util.List;
 
 public class ScrollingActivity extends AppCompatActivity {
+
+    private static final String TAG = "LogTest_Activity";
+    private LogClient mLogClient;
+    private LogServer mLogServer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +33,36 @@ public class ScrollingActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
+            }
+        });
+        mLogClient = new LogClient(this);
+        mLogServer = new LogServer(this);
+        MainWorker.postDelay(1000, new Runnable() {
+            @Override
+            public void run() {
+                test();
+            }
+        });
+    }
+
+    private void test() {
+        mLogClient.write(LogClient.LEVEL_INFO, TAG, "test", new RuntimeException("aaaa bbbbbb cccc dddd eeee ,ffff gggg hhhh jjjjj kkkkk."));
+        for(int i=0;  i<10 ;i++){
+            if(i>0 && i < 6){
+                mLogClient.write(i, TAG, "initData_"+i, "messagejdsfjdsjfdsfjdsfjdsfkjdsfkjdskjf" +
+                        "dsfkjdsjfkdsfkjdskjfdsjkfdkjsfdkjsfdkjsfkjdsfkjdsfkjdskjfdskjfdskjfdkjsfjds____________"+i);
+            }else{
+                mLogClient.write(LogClient.LEVEL_INFO, TAG+"__"+i, "initData", "in loop: i = "+ i);
+            }
+        }
+        testRead();
+    }
+
+    private void testRead() {
+        mLogClient.readLog(new LogFilterOptions(), new LogContext.IReadCallback() {
+            @Override
+            public void onResult(List<LogRecord> records) {
+                com.heaven7.core.util.Logger.i(TAG, "testRead", "LogRecord: size = " + records.size() +" , " + records);
             }
         });
     }
@@ -49,5 +86,12 @@ public class ScrollingActivity extends AppCompatActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onDestroy() {
+        mLogClient.destroy();
+        mLogServer.destroy();
+        super.onDestroy();
     }
 }
