@@ -82,7 +82,7 @@ public class LogServer extends RemoteLogContext {
         try {
             String log = msg.getData().getString(LogConstant.KEY_LOG);
             //write
-            final String filename = LogUtil.getLogFilename(mDir, "LogManager");
+            final String filename = LogUtil.getLogFilename(mDir, "LogServer");
             LogUtil.write2SD(filename, log, true);
 
             data.putInt(LogConstant.KEY_LOG_OP_RESULT, LogConstant.OP_STATE_SUCCESS);

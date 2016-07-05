@@ -25,3 +25,6 @@ dependencies {
 
     compile 'com.heaven7.android.ipc:ipc:1.0.2'
 }
+
+apply from: "bintrayUpload.gradle"
+
