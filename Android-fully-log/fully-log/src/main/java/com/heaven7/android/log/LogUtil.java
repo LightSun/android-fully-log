@@ -1,5 +1,7 @@
 package com.heaven7.android.log;
 
+import android.text.TextUtils;
+
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -91,4 +93,9 @@ public class LogUtil {
                 }
         }
     }
+
+    public static boolean isValid(String str){
+        return !TextUtils.isEmpty(str) && !"null".equals(str);
+    }
+
 }

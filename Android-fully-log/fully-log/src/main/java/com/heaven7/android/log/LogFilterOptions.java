@@ -4,27 +4,63 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 /**
-     * the filter options:  dir， date( startTime with endTime )， level(level with lowestLevel), main tag，methodTag, exception,content
-     */
+ * the filter options:  dir， date( startTime with endTime )， level(level with lowestLevel), main tag，methodTag, exception,content
+ */
 public class LogFilterOptions implements Parcelable {
-        public int level ;
-        public int lowestLevel ;          //all >= level will allow
-        public long startTime ;
-        public long endTime ;
+    /**
+     * the accurate log level
+     */
+    public int level;
+    /**
+     * the lowest log level.
+     */
+    public int lowestLevel;          //all >= level will allow
+    /**
+     * the start time of log
+     */
+    public long startTime;
+    /**
+     * the end time of log
+     */
+    public long endTime;
 
-        public String tag ;
-        public String tagPrefix ;
-        public String methodTag ;        //LiveController
-        public String methodTagPrefix ;
+    /**
+     * the log tag, eg: 'LiveController' can only match LiveController.
+     */
+    public String tag;
+    /**
+     * the log tag prefix. eg: 'Live'  can match LiveController and etc.
+     */
+    public String tagPrefix;
+    /**
+     * the method tag(often is method name) of log. eg: 'onResume' can only match 'onResume()'
+     */
+    public String methodTag;
+    /**
+     * the method tag(often is method name) of log. eg: 'on' can  match 'onResume()' and etc.
+     */
+    public String methodTagPrefix;
 
-        public String exceptionName ;     //java.lang.RuntimeException
-        public String exceptionShortName ;//RuntimeException
+    /**
+     * the fully exception class name. eg: 'java.lang.RuntimeException' can only match 'java.lang.RuntimeException'.
+     */
+    public String exceptionName;
+    /**
+     * the fully exception class name. eg: 'RuntimeException' can  match 'java.lang.RuntimeException' and etc.
+     */
+    public String exceptionShortName;
 
-        public String dir ;
-        public String content ;
+    /**
+     * the directory of log in sdcard
+     */
+    public String dir;
+    /**
+     * the content of concrete log. match rule is contains target content.
+     */
+    public String content;
 
     public LogFilterOptions() {
-        }
+    }
 
     @Override
     public int describeContents() {

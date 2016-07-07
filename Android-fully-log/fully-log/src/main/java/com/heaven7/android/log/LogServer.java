@@ -217,15 +217,40 @@ public class LogServer extends RemoteLogContext {
         if(ops.lowestLevel!=0 && record.getLevel() < ops.lowestLevel){
             return false;
         }
-        if(ops.tag!=null && !record.getTag().equals(ops.tag)){
+
+        //valid tag
+        final String tag = record.getTag();
+        if(ops.tag!=null && !ops.tag.equals(tag)){
             return false;
         }
-        if(ops.methodTag!=null && !ops.methodTag.equals(record.getMethodTag())){
+        if(ops.tagPrefix != null && (!LogUtil.isValid(tag) || !tag.startsWith(ops.tagPrefix))){
             return false;
         }
-        if(ops.exceptionName!=null && !ops.exceptionName.equals(record.getExceptionName())){
+        //valid method tag
+        final String methodTag = record.getMethodTag();
+        if(ops.methodTag!=null && !ops.methodTag.equals(methodTag)){
             return false;
         }
+        if(ops.methodTagPrefix != null && (!LogUtil.isValid(methodTag) || !methodTag.startsWith(ops.methodTagPrefix))){
+            return false;
+        }
+
+        //exception name and short exception name
+        final String exceptionName = record.getExceptionName();
+        if(ops.exceptionName!=null && !ops.exceptionName.equals(exceptionName)){
+            return false;
+        }
+        if(ops.exceptionShortName!=null){
+            if(!LogUtil.isValid(exceptionName)){
+                return false;
+            }
+            final int index = exceptionName.lastIndexOf(".");
+            //have short name
+            if(index != -1 && !ops.exceptionShortName.equals(exceptionName.substring(index+1))){
+                return false;
+            }
+        }
+
         if(ops.content!=null && !record.getMessage().contains(ops.content)){
             return false;
         }
