@@ -18,7 +18,7 @@ public class ScrollingActivity extends AppCompatActivity {
 
     private static final String TAG = "LogTest_Activity";
     private LogClient mLogClient;
-    private LogServer mLogServer;
+  //  private LogServer mLogServer; //remote have server now
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +36,7 @@ public class ScrollingActivity extends AppCompatActivity {
             }
         });
         mLogClient = new LogClient(this);
-        mLogServer = new LogServer(this);
+       // mLogServer = new LogServer(this);
         MainWorker.postDelay(1000, new Runnable() {
             @Override
             public void run() {
@@ -91,7 +91,7 @@ public class ScrollingActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         mLogClient.destroy();
-        mLogServer.destroy();
+      //  mLogServer.destroy();
         super.onDestroy();
     }
 }
