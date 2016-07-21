@@ -159,7 +159,9 @@ public class LogClient extends RemoteLogContext {
             final Message mess = Message.obtain();
             mess.what = LogConstant.WHAT_WRITE_LOG;
             mess.setData(b);
-            mClient.sendMessage(mess, IpcConstant.POLICY_REPLY);
+            if(!mClient.sendMessage(mess, IpcConstant.POLICY_REPLY)){
+                Log.i(TAG, "client ->  send message failed. Message = " + mess +" , data = " + b);
+            }
         }
     }
     private void doWithReplyMessage(Message msg) {
