@@ -3,6 +3,7 @@ package com.heaven7.android.log;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Message;
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.heaven7.android.ipc.MessageServer;
@@ -220,27 +221,27 @@ public class LogServer extends RemoteLogContext {
 
         //valid tag
         final String tag = record.getTag();
-        if(ops.tag!=null && !ops.tag.equals(tag)){
+        if(!TextUtils.isEmpty(ops.tag) && !ops.tag.equals(tag)){
             return false;
         }
-        if(ops.tagPrefix != null && (!LogUtil.isValid(tag) || !tag.startsWith(ops.tagPrefix))){
+        if(!TextUtils.isEmpty(ops.tagPrefix) && (!LogUtil.isValid(tag) || !tag.startsWith(ops.tagPrefix))){
             return false;
         }
         //valid method tag
         final String methodTag = record.getMethodTag();
-        if(ops.methodTag!=null && !ops.methodTag.equals(methodTag)){
+        if(!TextUtils.isEmpty(ops.methodTag) && !ops.methodTag.equals(methodTag)){
             return false;
         }
-        if(ops.methodTagPrefix != null && (!LogUtil.isValid(methodTag) || !methodTag.startsWith(ops.methodTagPrefix))){
+        if(!TextUtils.isEmpty(ops.methodTagPrefix) && (!LogUtil.isValid(methodTag) || !methodTag.startsWith(ops.methodTagPrefix))){
             return false;
         }
 
         //exception name and short exception name
         final String exceptionName = record.getExceptionName();
-        if(ops.exceptionName!=null && !ops.exceptionName.equals(exceptionName)){
+        if(!TextUtils.isEmpty(ops.exceptionName) && !ops.exceptionName.equals(exceptionName)){
             return false;
         }
-        if(ops.exceptionShortName!=null){
+        if(!TextUtils.isEmpty(ops.exceptionShortName)){
             if(!LogUtil.isValid(exceptionName)){
                 return false;
             }
@@ -251,7 +252,7 @@ public class LogServer extends RemoteLogContext {
             }
         }
 
-        if(ops.content!=null && !record.getMessage().contains(ops.content)){
+        if(!TextUtils.isEmpty(ops.content) && !record.getMessage().contains(ops.content)){
             return false;
         }
         return true;

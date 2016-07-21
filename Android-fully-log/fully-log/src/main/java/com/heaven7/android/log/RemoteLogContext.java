@@ -179,7 +179,6 @@ public abstract class RemoteLogContext {
 
     public abstract  void destroy();
 
-
     protected static void logWhenDebug(String method, String msg) {
         if(DEBUG){
             Log.d(TAG, "called [ "+ method + "() ]: " + msg);

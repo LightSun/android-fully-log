@@ -5,8 +5,8 @@ import android.os.Bundle;
 import android.os.Message;
 import android.util.Log;
 
+import com.heaven7.android.ipc.IpcConstant;
 import com.heaven7.android.ipc.MessageClient;
-import com.heaven7.android.ipc.MessageService;
 
 import java.util.ArrayList;
 
@@ -79,7 +79,7 @@ public class LogClient extends RemoteLogContext {
             b.putParcelable(LogConstant.KEY_LOG_FILTER_OPTIONS, ops);
             msg.setData(b);
         }
-        mClient.sendMessage(msg, MessageService.POLICY_REPLY);
+        mClient.sendMessage(msg, IpcConstant.POLICY_REPLY);
     }
 
     public void cancelReadLog(){
@@ -159,7 +159,7 @@ public class LogClient extends RemoteLogContext {
             final Message mess = Message.obtain();
             mess.what = LogConstant.WHAT_WRITE_LOG;
             mess.setData(b);
-            mClient.sendMessage(mess, MessageService.POLICY_REPLY);
+            mClient.sendMessage(mess, IpcConstant.POLICY_REPLY);
         }
     }
     private void doWithReplyMessage(Message msg) {
