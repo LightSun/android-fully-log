@@ -16,5 +16,6 @@ public final class LogConstant {
     public static final String KEY_LOG_NOTICE           =  "notice";
     public static final String KEY_LOG_FILTER_OPTIONS   =  "filter_ops";
     public static final String KEY_LOG_LOGRECORDS       =  "LogRecords";
+    public static final String KEY_READ_CALLBACK        =  "read_callback";
 
 }

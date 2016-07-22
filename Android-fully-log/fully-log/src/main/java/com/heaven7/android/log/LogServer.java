@@ -2,6 +2,7 @@ package com.heaven7.android.log;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.os.Message;
 import android.text.TextUtils;
 import android.util.Log;
@@ -63,18 +64,22 @@ public class LogServer extends RemoteLogContext {
         if(data.containsKey(LogConstant.KEY_LOG_FILTER_OPTIONS)){
             ops = data.getParcelable(LogConstant.KEY_LOG_FILTER_OPTIONS);
         }
-        Bundle b = new Bundle();
-        out.setData(b);
+        Bundle newData = new Bundle();
+        out.setData(newData);
+        final IBinder binder = BinderCompatUtil.getBinder(data, LogConstant.KEY_READ_CALLBACK);
+        if(binder!=null) {
+            BinderCompatUtil.putBinder(newData, LogConstant.KEY_READ_CALLBACK, binder);
+        }
 
         ArrayList<LogRecord> list = new ArrayList<>();
         try {
             readLogsImpl(new File(mDir), list, ops);
-            b.putInt(LogConstant.KEY_LOG_OP_RESULT, LogConstant.OP_STATE_SUCCESS);
+            newData.putInt(LogConstant.KEY_LOG_OP_RESULT, LogConstant.OP_STATE_SUCCESS);
         }catch (Exception e){
-            b.putString(LogConstant.KEY_LOG_NOTICE, LogUtil.toString(e));
-            b.putInt(LogConstant.KEY_LOG_OP_RESULT, LogConstant.OP_STATE_FAILED);
+            newData.putString(LogConstant.KEY_LOG_NOTICE, LogUtil.toString(e));
+            newData.putInt(LogConstant.KEY_LOG_OP_RESULT, LogConstant.OP_STATE_FAILED);
         }
-        b.putParcelableArrayList(LogConstant.KEY_LOG_LOGRECORDS, list);
+        newData.putParcelableArrayList(LogConstant.KEY_LOG_LOGRECORDS, list);
     }
 
     private void doWriteLog(Message msg, Message outMessage) {

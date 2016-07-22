@@ -7,7 +7,6 @@ import android.util.Log;
 import java.io.File;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
-import java.util.List;
 
 /**
  * Created by heaven7 on 2016/7/5.
@@ -72,16 +71,6 @@ public abstract class RemoteLogContext {
         }
     };
 
-    /**
-     * the callback of read logs.
-     */
-    public interface IReadCallback{
-        /**
-         * this will be called after read done.
-         * @param records the result list.
-         */
-        void onResult(List<LogRecord> records);
-    }
     /**
      * the log filter
      */

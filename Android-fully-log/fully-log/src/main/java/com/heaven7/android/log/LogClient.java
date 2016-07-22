@@ -2,7 +2,9 @@ package com.heaven7.android.log;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.os.Message;
+import android.os.RemoteException;
 import android.util.Log;
 
 import com.heaven7.android.ipc.IpcConstant;
@@ -18,7 +20,6 @@ public class LogClient extends RemoteLogContext {
     private static final String TAG = "LogClient";
 
     private final MessageClient mClient;
-    private volatile IReadCallback mReadCallback;
 
     public LogClient(Context context){
         this(context, DEFAULT_DIR, MODE_WRITE_FILE_AND_LOGCAT);
@@ -67,23 +68,20 @@ public class LogClient extends RemoteLogContext {
      * @param callback the read callback
      */
     public void readLog(LogFilterOptions ops, IReadCallback callback){
-        if(mReadCallback != null){
-            throw new IllegalStateException("only can read once until it callback");
+        if(callback == null){
+            throw new NullPointerException();
         }
-        this.mReadCallback = callback;
-
         Message msg = Message.obtain();
         msg.what = LogConstant.WHAT_READ_LOG;
+        Bundle b = new Bundle();
+        BinderCompatUtil.putBinder(b, LogConstant.KEY_READ_CALLBACK, callback.asBinder());
         if(ops!=null) {
-            Bundle b = new Bundle();
             b.putParcelable(LogConstant.KEY_LOG_FILTER_OPTIONS, ops);
             msg.setData(b);
         }
-        mClient.sendMessage(msg, IpcConstant.POLICY_REPLY);
-    }
-
-    public void cancelReadLog(){
-         this.mReadCallback = null;
+        if(!mClient.sendMessage(msg, IpcConstant.POLICY_REPLY)){
+            Log.i(TAG, "client ->  send message failed. Message = " + msg);
+        }
     }
 
     /**
@@ -174,10 +172,16 @@ public class LogClient extends RemoteLogContext {
                      logWhenDebug("doWithReplyMessage", "notice : " + msg.getData().getString(LogConstant.KEY_LOG_NOTICE));
                      return;
                  }
-                 if(mReadCallback != null){ //if null means it is cancelled.
-                     final ArrayList<LogRecord> records = msg.getData().getParcelableArrayList(LogConstant.KEY_LOG_LOGRECORDS);
-                     mReadCallback.onResult(records);
-                     mReadCallback = null;
+                 IBinder binder = BinderCompatUtil.getBinder(msg.getData(),LogConstant.KEY_READ_CALLBACK);
+                 if(binder == null){
+                     logWhenDebug("doWithReplyMessage", "read log result but binder ==null");
+                     return;
+                 }
+                 final ArrayList<LogRecord> records = msg.getData().getParcelableArrayList(LogConstant.KEY_LOG_LOGRECORDS);
+                 try {
+                     IReadCallback.Stub.asInterface(binder).onResult(records);
+                 } catch (RemoteException e) {
+                     //if happen we can do nothing
                  }
                  break;
 
