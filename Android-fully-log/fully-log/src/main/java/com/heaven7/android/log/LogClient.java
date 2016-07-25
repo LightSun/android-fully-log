@@ -163,7 +163,9 @@ public class LogClient extends RemoteLogContext {
         }
     }
     private void doWithReplyMessage(Message msg) {
+
          switch (msg.what){
+
              case LogConstant.WHAT_READ_LOG:
                  //in ipc : while pass the parcelable class you need care classloader.
                  msg.getData().setClassLoader(LogRecord.class.getClassLoader());

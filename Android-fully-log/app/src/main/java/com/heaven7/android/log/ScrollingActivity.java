@@ -1,6 +1,11 @@
 package com.heaven7.android.log;
 
+import android.content.ComponentName;
+import android.content.Context;
+import android.content.Intent;
+import android.content.ServiceConnection;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -9,7 +14,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.heaven7.android.ipc.IpcConstant;
 import com.heaven7.android.log.demo.R;
+import com.heaven7.core.util.Logger;
 import com.heaven7.core.util.MainWorker;
 
 import java.util.List;
@@ -18,7 +25,7 @@ public class ScrollingActivity extends AppCompatActivity {
 
     private static final String TAG = "LogTest_Activity";
     private LogClient mLogClient;
-  //  private LogServer mLogServer; //remote have server now
+    //  private LogServer mLogServer; //remote have server now
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
