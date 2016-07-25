@@ -87,6 +87,7 @@ public abstract class RemoteLogContext {
         boolean accept(int level, String mainTag, String otherTag, String exceptionClassName);
     }
 
+
     /**
      * the log formatter
      */
@@ -166,6 +167,9 @@ public abstract class RemoteLogContext {
         this.mLogFormatter = logFormatter;
     }
 
+    /**
+     * destroy this
+     */
     public abstract  void destroy();
 
     protected static void logWhenDebug(String method, String msg) {

@@ -5,10 +5,10 @@ android {
     buildToolsVersion "23.0.3"
 
     defaultConfig {
-        minSdkVersion 14
+        minSdkVersion 11
         targetSdkVersion 23
-        versionCode 5
-        versionName "1.0.5"
+        versionCode 8
+        versionName "1.1.0"
     }
     buildTypes {
         release {
@@ -23,7 +23,7 @@ dependencies {
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:23.3.0'
 
-    compile 'com.heaven7.android.ipc:ipc:1.0.8'
+    compile 'com.heaven7.android.ipc:ipc:2.0.0'
 }
 
 apply from: "bintrayUpload.gradle"
