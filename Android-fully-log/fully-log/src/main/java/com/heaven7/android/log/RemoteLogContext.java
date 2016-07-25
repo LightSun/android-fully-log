@@ -9,6 +9,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
 /**
+ * the remote log context client and server
  * Created by heaven7 on 2016/7/5.
  */
 public abstract class RemoteLogContext {
