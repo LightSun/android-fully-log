@@ -38,8 +38,9 @@ public class ScrollingActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                testWrite();
+              /*  Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();*/
             }
         });
         mLogClient = new LogClient(this);
@@ -53,6 +54,11 @@ public class ScrollingActivity extends AppCompatActivity {
     }
 
     private void test() {
+        testWrite();
+        testRead();
+    }
+
+    private void testWrite() {
         mLogClient.write(LogClient.LEVEL_INFO, TAG, "test", new RuntimeException("aaaa bbbbbb cccc dddd eeee ,ffff gggg hhhh jjjjj kkkkk."));
         for(int i=0;  i<10 ;i++){
             if(i>0 && i < 6){
@@ -62,7 +68,6 @@ public class ScrollingActivity extends AppCompatActivity {
                 mLogClient.write(LogClient.LEVEL_INFO, TAG+"__"+i, "initData", "in loop: i = "+ i);
             }
         }
-        testRead();
     }
 
     private void testRead() {
