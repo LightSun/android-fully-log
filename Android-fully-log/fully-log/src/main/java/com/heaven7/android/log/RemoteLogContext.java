@@ -169,7 +169,7 @@ public abstract class RemoteLogContext {
     }
 
     /**
-     * destroy this
+     * destroy the remote service. equal to unbind service
      */
     public abstract  void destroy();
 
