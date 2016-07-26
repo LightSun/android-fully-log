@@ -2,6 +2,9 @@
 this is a fully log system for debug/resolve problem on android
 
 ##  详细介绍及使用
+    使用场景：
+           比如我们在开发和调试app过程中，有时候需要复现一些麻烦的Bug（经常测试测出来后）.才能方便的解决问题。
+           这个库就是为了方便读写日志用的。
     原理： 利用ipc进程间通信来读写日志。
     特点： 支持日志的格式化，加解密，读写过滤。
            支持3种输出模式： logcat/文件/logcat+文件（文件中方便以后读取日志） 
