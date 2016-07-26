@@ -82,7 +82,7 @@ this is a fully log system for debug/resolve problem on android
         
 #### 使用案例：
    -  示例：[android-fully-log-server-demo](https://github.com/LightSun/android-fully-log-server-demo) 
-   -  里面注册了1个LogServer和1个LogClient. 方便并可以随时查阅日志。
+   -  里面注册了1个LogServer和1个LogClient. 方便并可以随时过滤查阅日志(也可以添加一条简单的日志)。
    -  具体详见[demo](https://github.com/LightSun/android-fully-log-server-demo/tree/master/Android-fully-log-server-demo/app)
         
 ## Gradle config    
