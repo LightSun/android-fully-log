@@ -67,7 +67,31 @@ this is a fully log system for debug/resolve problem on android
      * @param callback the read callback
      */
     public void readLog(LogFilterOptions ops, IReadCallback callback)
-```
+```  
+    使用步骤：
+        1，添加权限 : 读写sd卡和消息服务
+        <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+        <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+        <uses-permission android:name="com.heaven7.android.ipc.service"/>. 
+        和下面的Gradle config.
+        
+        2, 创建LogServer和LogClient. (创建时会自动绑定远程服务).
+        
+        3, 调用对应的api去读写日志。
+        ps: 注意在适当的地方调用LogServer和LogClient.destroy().去解绑服务。
+        
+    使用案例：
+       [android-fully-log-server-demo](https://github.com/LightSun/android-fully-log-server-demo)
+       里面注册了1个LogServer和1个LogClient.
+       方便并可以随时查阅日志。
+        
+## Gradle config    
+``` java 
+  //日志客户端需要导入
+  compile 'com.heaven7.android.log:fully-log:1.1.2'
+  //日志服务端需要导入
+  compile 'com.heaven7.android.ipc.server:ipc-server:1.1.1'
+``` 
 
 ## refer lib
 [ipc and ipc-server](https://github.com/LightSun/android-common-util-light)
