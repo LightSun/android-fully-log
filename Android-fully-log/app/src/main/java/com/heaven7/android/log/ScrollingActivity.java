@@ -1,5 +1,6 @@
 package com.heaven7.android.log;
 
+import android.Manifest;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -18,6 +19,8 @@ import com.heaven7.android.ipc.IpcConstant;
 import com.heaven7.android.log.demo.R;
 import com.heaven7.core.util.Logger;
 import com.heaven7.core.util.MainWorker;
+import com.heaven7.core.util.PermissionHelper;
+import com.heaven7.core.util.Toaster;
 
 import java.util.List;
 
@@ -25,6 +28,7 @@ public class ScrollingActivity extends AppCompatActivity {
 
     private static final String TAG = "LogTest_Activity";
     private LogClient mLogClient;
+    private PermissionHelper mPermissionHelper;
     //  private LogServer mLogServer; //remote have server now
 
     @Override
@@ -44,13 +48,20 @@ public class ScrollingActivity extends AppCompatActivity {
             }
         });
         mLogClient = new LogClient(this);
-       // mLogServer = new LogServer(this);
-        MainWorker.postDelay(1000, new Runnable() {
-            @Override
-            public void run() {
-                test();
-            }
-        });
+
+        mPermissionHelper = new PermissionHelper(this);
+        mPermissionHelper.startRequestPermission(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                new int[]{1}, new PermissionHelper.ICallback() {
+                    @Override
+                    public void onRequestPermissionResult(String requestPermission, int requestCode, boolean success) {
+                        Logger.i(TAG, "mPermissionHelper_onRequestPermissionResult", "success = " + success);
+                        if(!success){
+                            Toaster.show(getApplication(),"request permission(WRITE_EXTERNAL_STORAGE) failed.");
+                        }else{
+                            test();
+                        }
+                    }
+                });
     }
 
     private void test() {
