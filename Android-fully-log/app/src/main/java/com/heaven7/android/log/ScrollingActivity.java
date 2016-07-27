@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -88,6 +89,11 @@ public class ScrollingActivity extends AppCompatActivity {
                 com.heaven7.core.util.Logger.i(TAG, "testRead", "LogRecord: size = " + records.size() +" , " + records);
             }
         });
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        mPermissionHelper.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
     @Override
